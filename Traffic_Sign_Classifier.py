@@ -299,13 +299,15 @@ def main():
     X_train, y_train, X_valid, y_valid, pX_test, y_test = load_pickled_data()
     n_train, n_validation, n_test, image_shape, n_classes, class_file_df = \
         data_summary(X_train, X_valid, pX_test)
-    X_train = nomalize_batch(images_to_gray(X_train))
+    pX_train = nomalize_batch(images_to_gray(X_train))
     X_valid = nomalize_batch(images_to_gray(X_valid))
     for learning_rate in [1E-3, 1E-4]:
         for image_distort_param in [False, True]:
             for drop_param in [False, True]:
                 if image_distort_param:
                     X_train = [random_image_distortion(img) for img in X_train]
+                else:
+                    X_train = pX_train
                 if drop_param:
                     for dropout_rate in [0.25, 0.5, 0.75]:
                         # Construct a hyperparameter string for each one

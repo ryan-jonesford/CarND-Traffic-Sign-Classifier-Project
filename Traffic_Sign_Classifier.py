@@ -318,7 +318,7 @@ def main():
                     hparam_string = make_hparam_string(learning_rate, drop_param, image_distort_param)
                     print('Starting run for %s' % hparam_string)
                     ModelArch(X_train, y_train, X_valid, y_valid, pX_test, y_test,\
-                        learning_rate, n_classes, hparam_string, drop_param, dropout_rate=0,\
+                        learning_rate, n_classes, hparam_string, drop_param, dropout_prob=0,\
                         image_channels=1)
     print('Done training!')
     print('Run `tensorboard --logdir=%s` to see the results.' % LOGDIR)

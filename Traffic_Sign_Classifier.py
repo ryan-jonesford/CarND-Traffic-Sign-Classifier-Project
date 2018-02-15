@@ -279,10 +279,10 @@ def ModelArch(X_train, y_train, X_valid, y_valid, X_test, y_test,\
         saver.save(sess, os.path.join(LOGDIR, "model.ckpt"), i)
         print("Model Checkpoint saved")
 
-def make_hparam_string(learning_rate, use_drouput, use_image_distortion):
+def make_hparam_string(learning_rate, use_drouput, dropout_rate, use_image_distortion):
     drop_param = "Dropout" if use_drouput else "no_dropout"
     image_distort_param = "with_image_distortion" if use_image_distortion else "no_image_distortion"
-    return "lr_%.0E__%s__%s" % (learning_rate, drop_param, image_distort_param)
+    return "lr_%.0E__%s__dropout_rate_%s__%s" % (learning_rate, drop_param, dropout_rate, image_distort_param)
 
 # def testrun(X_train, y_train, X_valid, y_valid, X_test, y_test):
 #     n_train, n_validation, n_test, image_shape, n_classes, class_file_df = data_summary()
@@ -301,6 +301,7 @@ def main():
         data_summary(X_train, X_valid, pX_test)
     pX_train = nomalize_batch(images_to_gray(X_train))
     X_valid = nomalize_batch(images_to_gray(X_valid))
+    dropout_rate = 0
     for learning_rate in [1E-3, 1E-4]:
         for image_distort_param in [False, True]:
             for drop_param in [False, True]:
@@ -311,7 +312,7 @@ def main():
                 if drop_param:
                     for dropout_rate in [0.25, 0.5, 0.75]:
                         # Construct a hyperparameter string for each one
-                        hparam_string = make_hparam_string(learning_rate, drop_param, image_distort_param)
+                        hparam_string = make_hparam_string(learning_rate, drop_param, dropout_rate, image_distort_param)
                         print('Starting run for %s' % hparam_string)
                         ModelArch(X_train, y_train, X_valid, y_valid, pX_test, y_test,\
                             learning_rate, n_classes, hparam_string, drop_param, dropout_rate,\

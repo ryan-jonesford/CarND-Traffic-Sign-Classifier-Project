@@ -157,7 +157,7 @@ def conv_layer(x, size_in, size_out, stride=1, name="conv"):
         tf.summary.histogram("weights", w)
         tf.summary.histogram("biases", b)
         tf.summary.histogram("activations", activation)
-        return tf.nn.max_pool(conv, ksize=[1,2,2,1], strides=[1,2,2,1], padding="SAME")
+        return tf.nn.max_pool(activation, ksize=[1,2,2,1], strides=[1,2,2,1], padding="SAME")
 
 def fc_layer(x, size_in, size_out, stride=1, name="fc" ):
     with tf.name_scope(name):

@@ -187,7 +187,7 @@ def logit(x, size_in, size_out, name="logit" ):
 def ModelArch(X_train, y_train, X_valid, y_valid, X_test, y_test,\
               learn_rate, n_classes, hparam="test_run", use_dropout=False, dropout_prob=0,\
               image_channels=3):
-    EPOCHS = 30
+    EPOCHS = 100
     BATCH_SIZE = 128
     tf.reset_default_graph()
     sess = tf.Session()
@@ -318,7 +318,7 @@ def main():
                             learning_rate, n_classes, hparam_string, drop_param, dropout_rate,\
                             image_channels=1)
                 else:
-                    hparam_string = make_hparam_string(learning_rate, drop_param, image_distort_param)
+                    hparam_string = make_hparam_string(learning_rate, drop_param, dropout_rate=0, use_image_distortion=image_distort_param)
                     print('Starting run for %s' % hparam_string)
                     ModelArch(X_train, y_train, X_valid, y_valid, pX_test, y_test,\
                         learning_rate, n_classes, hparam_string, drop_param, dropout_prob=0,\
